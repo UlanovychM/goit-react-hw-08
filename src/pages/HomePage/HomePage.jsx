@@ -1,37 +1,20 @@
-import { useEffect, useState } from 'react';
-import { fetchTrendsMovie } from '../../services/filmApi';
-import MovieList from '../../components/MovieList/MovieList';
-import Loader from '../../components/Loader/Loader';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import { Helmet } from 'react-helmet-async';
 
 import css from './HomePage.module.css';
 
 const HomePage = () => {
-	const [movies, setMovies] = useState([]);
-	const [loader, setLoader] = useState(false);
-	const [error, setError] = useState(false);
-
-	useEffect(() => {
-		const getData = async () => {
-			try {
-				setLoader(true);
-				const data = await fetchTrendsMovie();
-				setMovies(data);
-			} catch (e) {
-				setError(true);
-			} finally {
-				setLoader(false);
-			}
-		};
-		getData();
-	}, []);
-
 	return (
-		<div className={css.container}>
-			<h1>Trends today</h1>
-			{loader && <Loader />}
-			<MovieList movies={movies} />
-			{error && <ErrorMessage />}
+		<div>
+			<Helmet>
+				<title>Your PhoneBook</title>
+			</Helmet>
+			<h1>Welcome to Your PhoneBook</h1>
+			<p>
+				This is phonebook app for your contacts. Here you can log in and save
+				the necessary numbers of people you need in your account. You can
+				register several times to create separate accounts that will store the
+				phones of colleagues, friends or relatives separately.
+			</p>
 		</div>
 	);
 };

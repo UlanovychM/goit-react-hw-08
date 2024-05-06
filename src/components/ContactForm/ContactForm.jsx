@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addContacts } from '../../redux/contactsOps';
+import { addContacts } from '../../redux/contacts/operations';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 import { Form, Input, Label, SubmitButton } from './ContactForm.styled';

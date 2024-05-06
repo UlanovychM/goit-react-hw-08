@@ -1,10 +1,17 @@
-import { useEffect, useState } from 'react';
-import { fetchCast } from '../../services/filmApi';
-import { useParams } from 'react-router-dom';
-import Loader from '../Loader/Loader';
-import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import css from './MovieCast.module.css';
+import Navigation from 'components/Navigation/Navigation';
+import AuthNav from 'components/AuthNav/AuthNav';
+import UserMenu from 'components/UserMenu/UserMenu';
+import { useAuth } from 'hooks';
 
-const AppBar = () => {};
+const AppBar = () => {
+	const { isLoggedIn } = useAuth();
 
-export default MovieCast;
+	return (
+		<div>
+			<Navigation />
+			{isLoggedIn ? <UserMenu /> : <AuthNav />}
+		</div>
+	);
+};
+
+export default AppBar;

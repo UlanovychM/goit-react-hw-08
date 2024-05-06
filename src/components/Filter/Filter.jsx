@@ -1,21 +1,28 @@
-import { RotatingLines } from 'react-loader-spinner';
-import css from './Loader.module.css';
-const Loader = () => {
+import { useDispatch, useSelector } from 'react-redux';
+import { changeFilter } from '../../redux//filters/slice';
+import { useId } from 'react';
+import { Input, Label } from './SearchBox.styled';
+import { selectFilter } from '../../redux/filters/slice';
+
+const Filter = () => {
+	const dispatch = useDispatch();
+	const value = useSelector(selectFilter);
+	const searchId = useId();
+
 	return (
-		<div className={css.loader}>
-			<RotatingLines
-				visible={true}
-				height='96'
-				width='96'
-				strokeColor='#3f51b5'
-				strokeWidth='5'
-				animationDuration='0.75'
-				ariaLabel='rotating-lines-loading'
-				wrapperStyle={{}}
-				wrapperClass=''
+		<>
+			<Label htmlFor={searchId}>
+				<span>Find contacts by name</span>
+			</Label>
+			<Input
+				value={value}
+				id={searchId}
+				type='text'
+				name='search'
+				onChange={e => dispatch(changeFilter(e.target.value.trim()))}
 			/>
-		</div>
+		</>
 	);
 };
 
-export default Loader;
+export default Filter;
