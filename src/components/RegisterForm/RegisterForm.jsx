@@ -1,21 +1,42 @@
-import { RotatingLines } from 'react-loader-spinner';
-import css from './Loader.module.css';
-const Loader = () => {
+import { useDispatch } from 'react-redux';
+
+import { register } from '../../redux/auth/operations';
+import { Form, Label, Button, Input } from './RegisterForm.styled';
+
+export const RegisterForm = () => {
+	const dispatch = useDispatch();
+
+	const handleSubmit = e => {
+		e.preventDefault();
+		const form = e.currentTarget;
+		dispatch(
+			register({
+				name: form.elements.name.value,
+				email: form.elements.email.value,
+				password: form.elements.password.value,
+			})
+		);
+		form.reset();
+	};
+
 	return (
-		<div className={css.loader}>
-			<RotatingLines
-				visible={true}
-				height='96'
-				width='96'
-				strokeColor='#3f51b5'
-				strokeWidth='5'
-				animationDuration='0.75'
-				ariaLabel='rotating-lines-loading'
-				wrapperStyle={{}}
-				wrapperClass=''
-			/>
+		<div>
+			<Form onSubmit={handleSubmit} autoComplete='off'>
+				<h1 style={{ textAlign: 'center' }}>Create Account</h1>
+				<Label>
+					User name
+					<Input type='text' name='name' placeholder='John Dereck' />
+				</Label>
+				<Label>
+					Email
+					<Input type='email' name='email' placeholder='example@gmail.com' />
+				</Label>
+				<Label>
+					Password
+					<Input type='password' name='password' placeholder='*******' />
+				</Label>
+				<Button type='submit'>Create</Button>
+			</Form>
 		</div>
 	);
 };
-
-export default Loader;

@@ -1,8 +1,8 @@
 import { Helmet } from 'react-helmet-async';
-import ContactForm from 'components/ContactForm';
-import ContactList from 'components/ContactList';
-import Filter from 'components/Filter';
-import { Container } from 'components/Container/Container.styled';
+import ContactForm from '../../components/ContactForm/ContactForm';
+import ContactList from '../../components/ContactList/ContactList';
+import Filter from '../../components/Filter/Filter';
+// import { Container } from 'components/Container/Container.styled';
 
 const ContactsPage = () => {
 	return (
@@ -12,13 +12,13 @@ const ContactsPage = () => {
 			</Helmet>
 
 			<ContactForm />
-			<Container>
+			<div>
 				<h2>Contacts list</h2>
 
 				<Filter />
 
 				<ContactList />
-			</Container>
+			</div>
 		</div>
 	);
 };

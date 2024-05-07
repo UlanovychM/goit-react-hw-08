@@ -11,8 +11,6 @@ import { fetchContacts } from '../../redux/contacts/operations';
 
 const ContactList = () => {
 	const contacts = useSelector(selectFilteredContacts);
-	const loading = useSelector(selectIsLoading);
-	const error = useSelector(selectError);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -21,9 +19,6 @@ const ContactList = () => {
 
 	return (
 		<>
-			{!contacts.length && !error && !loading && <p>No contacts found.</p>}
-			{error && <p>{error}</p>}
-			{loading && <p>{loading}</p>}
 			<ul>
 				{contacts.map(contact => (
 					<li key={contact.id}>

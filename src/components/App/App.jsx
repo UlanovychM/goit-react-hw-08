@@ -1,38 +1,59 @@
 import { Routes, Route } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
-import { Toaster } from 'react-hot-toast';
-
-import MovieCast from '../MovieCast/MovieCast';
-import MovieReviews from '../MovieReviews/MovieReviews';
-import Navigation from '../Navigation/Navigation';
+import { useEffect, lazy } from 'react';
+import { useDispatch } from 'react-redux';
+import { useAuth } from '../../hooks/useAuth';
+import { RestrictedRoute } from '../Routs/RestrictedRoute';
+import { PrivateRout } from '../Routs/PrivateRout';
+import { refreshUser } from '../../redux/auth/operations';
+import Layout from '../../layout/Layout';
 import Loader from '../Loader/Loader';
 
 const HomePage = lazy(() => import('../../pages/HomePage/HomePage'));
-const MoviesPage = lazy(() => import('../../pages/MoviesPage/MoviesPage'));
-const MovieDetailsPage = lazy(() =>
-	import('../../pages/MovieDetailsPage/MovieDetailsPage')
+const ContactsPage = lazy(() =>
+	import('../../pages/ContactsPage/ContactsPage')
 );
-const NotFound = lazy(() => import('../../pages/NotFoundPage/NotFoundPage'));
-
-import css from './App.module.css';
+const RegisterPage = lazy(() =>
+	import('../../pages/RegisterPage/RegisterPage')
+);
+const LoginPage = lazy(() => import('../../pages/LoginPage/LoginPage'));
 
 function App() {
-	return (
-		<div className={css.container}>
-			<Navigation className={css.nav} />
-			<Suspense fallback={<Loader />}>
-				<Routes>
-					<Route path='/' element={<HomePage />} />
-					<Route path='/movies' element={<MoviesPage />} />
-					<Route path='/movies/:movieId' element={<MovieDetailsPage />}>
-						<Route path='reviews' element={<MovieReviews />} />
-						<Route path='cast' element={<MovieCast />} />
-					</Route>
-					<Route path='*' element={<NotFound />} />
-				</Routes>
-			</Suspense>
-			<Toaster />
-		</div>
+	const dispatch = useDispatch();
+	const { isRefreshing } = useAuth();
+
+	useEffect(() => {
+		dispatch(refreshUser());
+	}, [dispatch]);
+
+	return isRefreshing ? (
+		<Loader />
+	) : (
+		<Layout>
+			<Routes>
+				<Route path='/' element={<HomePage />} />
+				<Route
+					path='/contacts'
+					element={
+						<PrivateRout component={<ContactsPage />} redirectTo='/login' />
+					}
+				/>
+				<Route
+					path='/login'
+					element={
+						<RestrictedRoute component={<LoginPage />} redirectTo='/contacts' />
+					}
+				/>
+				<Route
+					path='/register'
+					element={
+						<RestrictedRoute
+							component={<RegisterPage />}
+							redirectTo='/contacts'
+						/>
+					}
+				/>
+			</Routes>
+		</Layout>
 	);
 }
 

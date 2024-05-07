@@ -1,25 +1,24 @@
-import PropTypes from 'prop-types';
+import { useAuth } from '../../hooks/useAuth';
 import { useDispatch } from 'react-redux';
-import { deleteContacts } from '../../redux/contactsOps';
-import { Button, Text } from './Contact.styled';
+import { logOut } from '../../redux/auth/operations';
+import { Button, Text } from './UserMenu.styled';
 
-const Contact = ({ contact: { name, number, id } }) => {
+const UserMenu = () => {
 	const dispatch = useDispatch();
-	const handleDelete = id => dispatch(deleteContacts(id));
-	return (
-		<>
-			<Text>{name}</Text>
-			<Text>{number}</Text>
+	const { user } = useAuth();
 
-			<Button type='button' onClick={() => handleDelete(id)}>
-				Delete
+	const handleLogOut = () => dispatch(logOut());
+	return (
+		<div>
+			<div>
+				<Text>Welcome, {user.name} </Text>
+				<Text>{user.email}</Text>
+			</div>
+			<Button type='button' onClick={handleLogOut}>
+				Logout
 			</Button>
-		</>
+		</div>
 	);
 };
 
-export default Contact;
-
-Contact.propTypes = {
-	contact: PropTypes.object,
-};
+export default UserMenu;

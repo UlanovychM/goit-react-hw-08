@@ -26,7 +26,7 @@ export const Input = styled.input`
 	border-radius: 3px;
 `;
 
-export const SubmitButton = styled.button`
+export const Button = styled.button`
 	width: 120px;
 	padding-top: 4px;
 	padding-bottom: 4px;

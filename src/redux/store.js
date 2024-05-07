@@ -11,7 +11,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { contactsReducer } from './contacts/slice';
-import { filterReducer } from './filter/filterSlice';
+import { filtersReducer } from './filters/slice';
 import { authReducer } from './auth/slice';
 
 const authPersistConfig = {
@@ -23,7 +23,7 @@ const authPersistConfig = {
 const rootReducer = combineReducers({
 	auth: persistReducer(authPersistConfig, authReducer),
 	contacts: contactsReducer,
-	filter: filterReducer,
+	filter: filtersReducer,
 });
 
 export const store = configureStore({
@@ -34,7 +34,6 @@ export const store = configureStore({
 				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
 			},
 		}),
-	devTools: process.env.NODE_ENV === 'development',
 });
 
 export const persistor = persistStore(store);

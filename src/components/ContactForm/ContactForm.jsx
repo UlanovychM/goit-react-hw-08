@@ -3,7 +3,7 @@ import { addContacts } from '../../redux/contacts/operations';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 import { Form, Input, Label, SubmitButton } from './ContactForm.styled';
-import { selectContacts } from '../../redux/selectors';
+import { selectContacts } from '../../redux/contacts/selectors';
 
 const ContactForm = () => {
 	const dispatch = useDispatch();

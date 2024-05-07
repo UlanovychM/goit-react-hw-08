@@ -1,21 +1,37 @@
-import { RotatingLines } from 'react-loader-spinner';
-import css from './Loader.module.css';
-const Loader = () => {
+import { useDispatch } from 'react-redux';
+import { logIn } from '../../redux/auth/operations';
+import { Form, Input, Label, Button } from './LoginForm.styled';
+
+const LoginForm = () => {
+	const dispatch = useDispatch();
+
+	const handleSubmit = e => {
+		e.preventDefault();
+		const form = e.currentTarget;
+		dispatch(
+			logIn({
+				email: form.elements.email.value,
+				password: form.elements.password.value,
+			})
+		);
+		form.reset();
+	};
+
 	return (
-		<div className={css.loader}>
-			<RotatingLines
-				visible={true}
-				height='96'
-				width='96'
-				strokeColor='#3f51b5'
-				strokeWidth='5'
-				animationDuration='0.75'
-				ariaLabel='rotating-lines-loading'
-				wrapperStyle={{}}
-				wrapperClass=''
-			/>
+		<div>
+			<Form onSubmit={handleSubmit} autoComplete='off'>
+				<Label>
+					Email
+					<Input type='email' name='email' placeholder='Your Email' />
+				</Label>
+				<Label>
+					Password
+					<Input type='password' name='password' placeholder='Password' />
+				</Label>
+				<Button type='submit'>Log In</Button>
+			</Form>
 		</div>
 	);
 };
 
-export default Loader;
+export default LoginForm;
