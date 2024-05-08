@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 
-
+import { Container } from './HomePage.styled';
 
 const HomePage = () => {
 	return (
-		<div>
+		<Container>
 			<Helmet>
 				<title>Your PhoneBook</title>
 			</Helmet>
@@ -15,7 +15,7 @@ const HomePage = () => {
 				register several times to create separate accounts that will store the
 				phones of colleagues, friends or relatives separately.
 			</p>
-		</div>
+		</Container>
 	);
 };
 
